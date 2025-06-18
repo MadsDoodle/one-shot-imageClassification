@@ -32,7 +32,7 @@ Instead of learning to classify *who* is in a photo, the model learns a **simila
 
 The core task is **verification**. The model isn't asked "who is this?", but rather "is this the same person?". As shown below, the model is trained on pairs of images, learning to distinguish between "same" and "different" pairs. During testing (the one-shot task), it compares a new image against a single reference image to verify identity.
 
-`![One-Shot Learning Concept](docs/docs/Screenshot 2025-06-18 at 10.01.11 AM.png)`
+`![One-Shot Learning Concept](docs/Screenshot 2025-06-18 at 10.01.11 AM.png)`
 
 ### Siamese Networks
 
@@ -66,7 +66,7 @@ graph TD
     B --> C{Load and Preprocess Data};
     C --> D[Build the Siamese CNN Model];
     D --> E{Train the Model using Triplet Loss};
-    E --> F[Save the Trained Model <br/>(One-shot-Image-Recognition-checkpoint)];
+    E --> F["Save the Trained Model <br/>(One-shot-Image-Recognition-checkpoint)"];
     F --> G{Verification Stage};
     
     subgraph G
