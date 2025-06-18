@@ -32,13 +32,13 @@ Instead of learning to classify *who* is in a photo, the model learns a **simila
 
 The core task is **verification**. The model isn't asked "who is this?", but rather "is this the same person?". As shown below, the model is trained on pairs of images, learning to distinguish between "same" and "different" pairs. During testing (the one-shot task), it compares a new image against a single reference image to verify identity.
 
-`![One-Shot Learning Concept](docs/Screenshot 2025-06-18 at 10.01.11 AM.png)`
+![One-Shot Learning Concept](docs/Screenshot 2025-06-18 at 10.01.11 AM.png)
 
 ### Siamese Networks
 
 To learn this similarity function, we use a Siamese Network. This architecture consists of two identical "twin" Convolutional Neural Networks (CNNs) that share the exact same weights. Each twin processes one of the two input images, converting it into a low-dimensional feature vector (an embedding). The network then calculates the distance between these two embeddings to determine their similarity. Because the weights are shared, similar images will be mapped to nearby points in the feature space.
 
-`![Siamese Network Diagram](docs/Screenshot 2025-06-18 at 10.01.32 AM.png)`
+![Siamese Network Diagram](docs/Screenshot 2025-06-18 at 10.01.32 AM.png)
 
 ### Triplet Loss
 
@@ -53,8 +53,6 @@ The goal of Triplet Loss is to train the network to minimize the distance betwee
 
 The core of each twin network is a deep Convolutional Neural Network. The architecture used in this project is based on the model proposed in the "Siamese Neural Networks for One-shot Image Recognition" paper. It processes a `105x105` pixel input image through a series of convolutional, ReLU activation, and max-pooling layers to generate a `4096`-dimensional feature vector. The L1 distance between the feature vectors of the two input images is then computed, followed by a final fully connected layer with a sigmoid activation to produce the similarity score.
 
-*(Save your image as `cnn_architecture.jpg` in the `docs` folder and use the following line)*
-`![CNN Architecture](docs/cnn_architecture.jpg)`
 
 ## Project Workflow
 
@@ -76,8 +74,8 @@ graph TD
       K{Compare Distance to Threshold};
     end
     
-    K -- "Distance < Threshold" --> L[Identity Verified (Same Person)];
-    K -- "Distance >= Threshold" --> M[Identity Not Verified (Different Person)];
+    K -- "Distance < Threshold" --> L["Identity Verified (Same Person)"];
+    K -- "Distance >= Threshold" --> M["Identity Not Verified (Different Person)"];
     L --> Z[End];
     M --> Z[End];
 ```
