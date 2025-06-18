@@ -1,0 +1,7 @@
+# Ignore everything
+*
+
+# But not these files
+!.gitignore
+!One-shot-Image-Recognition.ipynb
+!README.md
