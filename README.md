@@ -37,12 +37,12 @@ graph TD
     subgraph "Phase 1: Training - Learning a Similarity Function"
         A[Start Training] --> B{Select a Triplet of Images};
         B --> B_A[Anchor Image];
-        B --> B_P[Positive Image <br/>(Same Identity)];
-        B --> B_N[Negative Image <br/>(Different Identity)];
+        B --> B_P["Positive Image <br/>(Same Identity)"];
+        B --> B_N["Negative Image <br/>(Different Identity)"];
         
         B_A & B_P & B_N --> C["Process all 3 images through<br/>the same Siamese Network<br/>(Shared Weights)"];
         C --> D[Generate a Feature Embedding for each image];
-        D --> E{Calculate Triplet Loss<br/>Goal: d(A,P) + margin < d(A,N)};
+        D --> E{"Calculate Triplet Loss<br/>Goal: d(A,P) + margin < d(A,N)"};
         E --> F[Adjust Network Weights via Backpropagation];
         F --> G{Is Training Complete?};
         G -- No --> B;
