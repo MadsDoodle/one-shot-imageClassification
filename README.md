@@ -32,13 +32,42 @@ Instead of learning to classify *who* is in a photo, the model learns a **simila
 
 The core task is **verification**. The model isn't asked "who is this?", but rather "is this the same person?". As shown below, the model is trained on pairs of images, learning to distinguish between "same" and "different" pairs. During testing (the one-shot task), it compares a new image against a single reference image to verify identity.
 
-![One-Shot Learning Concept](docs/Screenshot 2025-06-18 at 10.01.11 AM.png)
+```mermaid
+graph TD
+    subgraph "Phase 1: Training - Learning a Similarity Function"
+        A[Start Training] --> B{Select a Triplet of Images};
+        B --> B_A[Anchor Image];
+        B --> B_P[Positive Image <br/>(Same Identity)];
+        B --> B_N[Negative Image <br/>(Different Identity)];
+        
+        B_A & B_P & B_N --> C["Process all 3 images through<br/>the same Siamese Network<br/>(Shared Weights)"];
+        C --> D[Generate a Feature Embedding for each image];
+        D --> E{Calculate Triplet Loss<br/>Goal: d(A,P) + margin < d(A,N)};
+        E --> F[Adjust Network Weights via Backpropagation];
+        F --> G{Is Training Complete?};
+        G -- No --> B;
+        G -- Yes --> H[Trained Similarity Model is Ready];
+    end
+
+    subgraph "Phase 2: Verification - The One-Shot Task"
+        I[Start Verification] --> J{Input a Query Image & a Reference Image};
+        J --> K["Process both images through the<br/><b>Trained Similarity Model</b><br/>to get their embeddings"];
+        K --> L[Calculate Distance between the two Embeddings];
+        L --> M{"Is Distance < Threshold?"};
+        M -- Yes --> N["Output: Identity Verified<br/>(Same Person)"];
+        M -- No --> O["Output: Identity Not Verified<br/>(Different Person)"];
+        N --> P[End];
+        O --> P[End];
+    end
+
+    H --> I;
+``` 
 
 ### Siamese Networks
 
 To learn this similarity function, we use a Siamese Network. This architecture consists of two identical "twin" Convolutional Neural Networks (CNNs) that share the exact same weights. Each twin processes one of the two input images, converting it into a low-dimensional feature vector (an embedding). The network then calculates the distance between these two embeddings to determine their similarity. Because the weights are shared, similar images will be mapped to nearby points in the feature space.
 
-![Siamese Network Diagram](docs/Screenshot 2025-06-18 at 10.01.32 AM.png)
+
 
 ### Triplet Loss
 
